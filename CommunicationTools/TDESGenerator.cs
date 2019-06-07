@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 
 namespace CommunicationTools
 {
-    class TDESGenerator
+    public class TDESGenerator
     {
         public string Encrypt(string source, string key)
         {

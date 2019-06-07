@@ -17,6 +17,8 @@ namespace VisualInterface
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Slave());
+            Application.Run(new Master());
+
         }
     }
 }

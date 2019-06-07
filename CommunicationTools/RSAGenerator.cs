@@ -9,9 +9,9 @@ namespace CommunicationTools
 {
     public class RSAGenerator
     {
-        private static RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(512);
-        private string _privateKey;
-        private string _publicKey;
+        private static RSACryptoServiceProvider rsa;
+        private RSAParameters _privateKey;
+        private RSAParameters _publicKey;
         private string stringSerializer(RSAParameters key)
         {
             string keyString;
@@ -26,27 +26,20 @@ namespace CommunicationTools
             return keyString;
 
         }
-        public string setPublicKey()
+        public void setPublicPrivateKey()
         {
-            RSAParameters publicKey = rsa.ExportParameters(false);
-            _publicKey = this.stringSerializer(publicKey);
-            return _publicKey;
-        }
-        public string setPrivateKey()
-        {
-            RSAParameters privateKey = rsa.ExportParameters(true);
-            _privateKey = this.stringSerializer(privateKey);
-            return _privateKey;
+            rsa = new RSACryptoServiceProvider(512);
+            _publicKey = rsa.ExportParameters(false);
+            _privateKey = rsa.ExportParameters(true);
 
         }
         public string getPublicKey()
         {
-            return _publicKey;
+            return rsa.ToXmlString(false);
         }
         public string getPrivateKey()
         {
-            return _privateKey;
-        }
-
+            return rsa.ToXmlString(true);
+        }   
     }
 }

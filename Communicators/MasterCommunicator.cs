@@ -3,21 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunicationTools;
 
 namespace Communicators
 {
-    class MasterCommunicator : ICommunicator
+    public class MasterCommunicator : ICommunicator
     {
-        public string ExportXML()
+        RSAGenerator rsa = new RSAGenerator();
+        public string getPublicKey() { return rsa.getPublicKey(); }
+        public string getPrivateKey() { return rsa.getPrivateKey(); }
+        public void GeneratePublicPrivateKey()
         {
             throw new NotImplementedException();
         }
-
-        public string[] GeneratePublicPrivateKey()
+        public string ExportXML(string type)
         {
             throw new NotImplementedException();
         }
-
         public string ImportXML()
         {
             throw new NotImplementedException();

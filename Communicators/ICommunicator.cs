@@ -8,8 +8,10 @@ namespace Communicators
 {
     interface ICommunicator
     {
-        string[] GeneratePublicPrivateKey();
-        string ExportXML();
+        void GeneratePublicPrivateKey();
+        string getPrivateKey();
+        string getPublicKey();
+        string ExportXML(string type);
         string ImportXML();
 
     }

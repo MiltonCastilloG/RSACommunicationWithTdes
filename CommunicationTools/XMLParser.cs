@@ -7,7 +7,7 @@ using System.Xml;
 
 namespace CommunicationTools
 {
-    class XMLParser
+    public class XMLParser
     {
         public string CreatePublicKeyXml(string path, string publicKey)
         {
@@ -15,6 +15,7 @@ namespace CommunicationTools
             writer.WriteStartDocument();
             writer.WriteElementString("clavepublica", publicKey);
             writer.WriteEndDocument();
+            writer.Flush();
             return writer.ToString();
         }
         public string CreateTDESXml(string path, string[] tdes)
@@ -30,6 +31,7 @@ namespace CommunicationTools
             }
             writer.WriteEndElement();
             writer.WriteEndDocument();
+            writer.Flush();
             return writer.ToString();
         }
         public string CreateMessageXml(string path, string message)
@@ -40,6 +42,7 @@ namespace CommunicationTools
             writer.WriteElementString("textoe", message);
             writer.WriteEndElement();
             writer.WriteEndDocument();
+            writer.Flush();
             return writer.ToString();
         }
         public string ReadXml(string path, string nodeToRead)
