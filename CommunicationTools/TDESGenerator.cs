@@ -6,38 +6,37 @@ namespace CommunicationTools
 {
     public class TDESGenerator
     {
-        public string Encrypt(string source, string key)
-        {
-            TripleDESCryptoServiceProvider desCryptoProvider = new TripleDESCryptoServiceProvider();
-            MD5CryptoServiceProvider hashMD5Provider = new MD5CryptoServiceProvider();
+        private static TripleDESCryptoServiceProvider desCryptoProvider;
 
-            byte[] byteHash;
-            byte[] byteBuff;
-
-            byteHash = hashMD5Provider.ComputeHash(Encoding.UTF8.GetBytes(key));
-            desCryptoProvider.Key = byteHash;
-            desCryptoProvider.Mode = CipherMode.ECB; //CBC, CFB
-            byteBuff = Encoding.UTF8.GetBytes(source);
-
-            string encoded =
-                Convert.ToBase64String(desCryptoProvider.CreateEncryptor().TransformFinalBlock(byteBuff, 0, byteBuff.Length));
-            return encoded;
+        public TDESGenerator() {
+            desCryptoProvider = new TripleDESCryptoServiceProvider();
         }
-        public static string Decrypt(string encodedText, string key)
+        public byte[] setKeys(byte[] key)
         {
-            TripleDESCryptoServiceProvider desCryptoProvider = new TripleDESCryptoServiceProvider();
-            MD5CryptoServiceProvider hashMD5Provider = new MD5CryptoServiceProvider();
-
-            byte[] byteHash;
-            byte[] byteBuff;
-
-            byteHash = hashMD5Provider.ComputeHash(Encoding.UTF8.GetBytes(key));
-            desCryptoProvider.Key = byteHash;
-            desCryptoProvider.Mode = CipherMode.ECB; //CBC, CFB
-            byteBuff = Convert.FromBase64String(encodedText);
-
-            string plaintext = Encoding.UTF8.GetString(desCryptoProvider.CreateDecryptor().TransformFinalBlock(byteBuff, 0, byteBuff.Length));
-            return plaintext;
+            desCryptoProvider.Key = key;
+            return desCryptoProvider.Key;
+        }
+        public byte[] setIV(byte[] IV)
+        {
+            desCryptoProvider.IV = IV;
+            return desCryptoProvider.IV;
+        }
+        public byte[] getKeys() {
+            return desCryptoProvider.Key;
+        }
+        public byte[] getInitializationVector()
+        {
+            return desCryptoProvider.IV;
+        }
+        public byte[] Encrypt(byte[] source)
+        {
+            desCryptoProvider.Mode = CipherMode.ECB;
+            return desCryptoProvider.CreateEncryptor().TransformFinalBlock(source, 0, source.Length);
+        }
+        public byte[] Decrypt(byte[] encodedByte)
+        {
+            desCryptoProvider.Mode = CipherMode.ECB;
+            return desCryptoProvider.CreateDecryptor().TransformFinalBlock(encodedByte, 0, encodedByte.Length);
         }
     }
 }

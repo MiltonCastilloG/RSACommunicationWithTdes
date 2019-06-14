@@ -43,7 +43,7 @@
             this.MessageTb = new System.Windows.Forms.TextBox();
             this.EncryptMessageBtn = new System.Windows.Forms.Button();
             this.ExportMessageTdesBtn = new System.Windows.Forms.Button();
-            this.EndResultLabel = new System.Windows.Forms.Label();
+            this.EncryptMessageLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // Title
@@ -186,18 +186,19 @@
             this.ExportMessageTdesBtn.Name = "ExportMessageTdesBtn";
             this.ExportMessageTdesBtn.Size = new System.Drawing.Size(243, 23);
             this.ExportMessageTdesBtn.TabIndex = 14;
-            this.ExportMessageTdesBtn.Text = "Encriptar texto algoritmo TDES y clave TDES desencriptada ";
+            this.ExportMessageTdesBtn.Text = "Exportar mensaje a xml";
+            this.ExportMessageTdesBtn.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.ExportMessageTdesBtn.UseVisualStyleBackColor = true;
             this.ExportMessageTdesBtn.Click += new System.EventHandler(this.ExportMessageTdesBtn_Click);
             // 
-            // EndResultLabel
+            // EncryptMessageLabel
             // 
-            this.EndResultLabel.AutoSize = true;
-            this.EndResultLabel.Location = new System.Drawing.Point(60, 441);
-            this.EndResultLabel.Name = "EndResultLabel";
-            this.EndResultLabel.Size = new System.Drawing.Size(163, 13);
-            this.EndResultLabel.TabIndex = 15;
-            this.EndResultLabel.Text = "<Resultado del texto encriptado>";
+            this.EncryptMessageLabel.AutoSize = true;
+            this.EncryptMessageLabel.Location = new System.Drawing.Point(60, 441);
+            this.EncryptMessageLabel.Name = "EncryptMessageLabel";
+            this.EncryptMessageLabel.Size = new System.Drawing.Size(163, 13);
+            this.EncryptMessageLabel.TabIndex = 15;
+            this.EncryptMessageLabel.Text = "<Resultado del texto encriptado>";
             // 
             // Slave
             // 
@@ -205,7 +206,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.ClientSize = new System.Drawing.Size(537, 710);
-            this.Controls.Add(this.EndResultLabel);
+            this.Controls.Add(this.EncryptMessageLabel);
             this.Controls.Add(this.ExportMessageTdesBtn);
             this.Controls.Add(this.EncryptMessageBtn);
             this.Controls.Add(this.MessageTb);
@@ -246,7 +247,7 @@
         private System.Windows.Forms.TextBox MessageTb;
         private System.Windows.Forms.Button EncryptMessageBtn;
         private System.Windows.Forms.Button ExportMessageTdesBtn;
-        private System.Windows.Forms.Label EndResultLabel;
+        private System.Windows.Forms.Label EncryptMessageLabel;
     }
 }
 
