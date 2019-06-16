@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunicationTools;
+using EcryptionManagers;
 
 namespace Communicators
 {
@@ -12,15 +13,16 @@ namespace Communicators
     {
         private byte[] tdesKeys;
         private string slavePublicKey;
+        private string encryptedMessage;
         private IList<string> tdesListHexaString = new List<string>();
 
         private string saveDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "/xmls";
-        private RSAGenerator rsa;
-        private TDESGenerator tdes;
+        private RsaManager rsa;
+        private TdesManager tdes;
 
         public MasterCommunicator() {
-            rsa = new RSAGenerator();
-            tdes = new TDESGenerator();
+            rsa = new RsaManager();
+            tdes = new TdesManager();
         }
         
         public string getPublicKey() {
@@ -37,7 +39,7 @@ namespace Communicators
             tdesList.Add(tdesKeys.Skip(16).Take(8).ToArray());
             foreach (byte[] bt in tdesList)
             {
-                tdesListHexaString.Add(HexaByteConverter.ByteArrayToHexaString(rsa.EncryptBytes(bt)));
+                tdesListHexaString.Add(HexaByteConverter.ToHexa(rsa.Encrypt(bt)));
             }
             return tdesListHexaString.ToArray();
         }
@@ -45,23 +47,32 @@ namespace Communicators
         {
             if (type == "encrypted_tdes")
             {
-                return XMLParser.CreateTdesXml(saveDirectory, tdesListHexaString.ToArray());
+                return XmlParser.CreateTdesXml(saveDirectory, tdesListHexaString.ToArray(), HexaByteConverter.ToHexa(rsa.Encrypt(tdes.getIv())));
             }
             throw new NotImplementedException();
         }
         public string ImportXML(string path, string type)
         {
             if (type == "public_key") {
-                slavePublicKey = XMLParser.ReadXmlGeneric(path, "clavepublica");
+                slavePublicKey = XmlParser.ReadXmlGeneric(path, "clavepublica");
                 rsa.setPublicKeyByImporting(slavePublicKey);
                 return slavePublicKey;
+            }
+            else if (type == "message") {
+                encryptedMessage = XmlParser.ReadXmlGeneric(path, "textoe");
+                return encryptedMessage;
             }
             throw new NotImplementedException();
         }
         public string setTdesKeys()
         {
             tdesKeys = tdes.getKeys();
-            return HexaByteConverter.ByteArrayToHexaString(tdesKeys);
+            return HexaByteConverter.ToHexa(tdesKeys);
+        }
+        public string DecryptMessage()
+        {
+            byte[] byteMessage = HexaByteConverter.ToByte(encryptedMessage);
+            return new ASCIIEncoding().GetString(tdes.Decrypt(byteMessage));
         }
     }
 }

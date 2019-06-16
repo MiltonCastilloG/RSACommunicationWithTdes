@@ -8,11 +8,11 @@ namespace CommunicationTools
 {
     public static class HexaByteConverter
     {
-        public static string ByteArrayToHexaString(byte[] bt)
+        public static string ToHexa(byte[] bt)
         {
             return BitConverter.ToString(bt).Replace("-", string.Empty);
         }
-        public static byte[] HexaStringToByteArray(String hex)
+        public static byte[] ToByte(String hex)
         {
             int NumberChars = hex.Length;
             byte[] bytes = new byte[NumberChars / 2];

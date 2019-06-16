@@ -7,20 +7,22 @@ using System.Xml;
 
 namespace CommunicationTools
 {
-    public static class XMLParser
+    public static class XmlParser
     {
         public static string CreatePublicKeyXml(string path, string publicKey)
         {
             XmlWriter writer = XmlWriter.Create(path + "/cp_esclavo.xml");
             writer.WriteStartDocument();
+            writer.WriteStartElement("root");
             writer.WriteElementString("clavepublica", publicKey);
+            writer.WriteEndElement();
             writer.WriteEndDocument();
             writer.Flush();
             string content = writer.ToString();
             writer.Dispose();
             return content;
         }
-        public static string CreateTdesXml(string path, string[] tdes)
+        public static string CreateTdesXml(string path, string[] tdes, string iv)
         {
             XmlWriter writer = XmlWriter.Create(path + "/tdesencriptado.xml");
             writer.WriteStartDocument();
@@ -31,6 +33,7 @@ namespace CommunicationTools
                 count++;
                 writer.WriteElementString("tdes" + count, des);
             }
+            writer.WriteElementString("iv", iv);
             writer.WriteEndElement();
             writer.WriteEndDocument();
             writer.Flush();
@@ -61,7 +64,7 @@ namespace CommunicationTools
             {
                 nodeText = node.InnerText;
             }
-            return nodeText;
+            return doc.SelectSingleNode("root").SelectSingleNode(nodeToRead).InnerText;
         }
         public static string[] ReadXmlTdes(string path)
         {
@@ -71,6 +74,7 @@ namespace CommunicationTools
             tdesList.Add(doc.SelectSingleNode("root").SelectSingleNode("tdes1").InnerText);
             tdesList.Add(doc.SelectSingleNode("root").SelectSingleNode("tdes2").InnerText);
             tdesList.Add(doc.SelectSingleNode("root").SelectSingleNode("tdes3").InnerText);
+            tdesList.Add(doc.SelectSingleNode("root").SelectSingleNode("iv").InnerText);
             return tdesList.ToArray();
         }
     }

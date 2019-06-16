@@ -54,14 +54,6 @@ namespace VisualInterface
         {
             string[] encriptedTdes = this.masterCommunicator.EncryptTdesWithPublicKey();
             string encriptedTdesLabel = "";
-            /*
-            int count = 0;
-            foreach (string elem in encriptedTdes)
-            {
-                count++;
-                encriptedTdesLabel += "<tdes"+count+">" + elem + "</tdes" + count + ">";
-            }
-            */
             foreach (string elem in encriptedTdes)
             {
                 encriptedTdesLabel += elem;
@@ -72,13 +64,30 @@ namespace VisualInterface
         {
             this.masterCommunicator.ExportXML("encrypted_tdes");
         }
-        private void DecryptMessageBtn_Click(object sender, EventArgs e)
-        {
-
-        }
         private void ImportMessageBtn_Click(object sender, EventArgs e)
         {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog
+            {
+                InitialDirectory = @"C:\Users\Yo\Desktop\Studies\Cryptografia\RSACommunicationWithTdes\xmls",
+                Title = "Browse XML Files",
 
+                CheckFileExists = true,
+                CheckPathExists = true,
+
+                DefaultExt = "xml",
+                Filter = "xml files (*.xml)|*.xml",
+                FilterIndex = 2,
+                RestoreDirectory = true,
+
+                ReadOnlyChecked = true,
+                ShowReadOnly = true
+            };
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                ImportMessageLabel.Text = this.masterCommunicator.ImportXML(openFileDialog1.FileName, "message");
+        }
+        private void DecryptMessageBtn_Click(object sender, EventArgs e)
+        {
+            DecryptMessageLabel.Text = this.masterCommunicator.DecryptMessage();
         }
         private void RsaGeneratorBtn_Click(object sender, EventArgs e)
         {

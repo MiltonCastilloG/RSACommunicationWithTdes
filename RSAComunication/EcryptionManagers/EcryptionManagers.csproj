@@ -4,15 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EC0EE319-E925-4593-BFFA-43432D4BC2D2}</ProjectGuid>
+    <ProjectGuid>{D78A0BEB-40E3-4B83-A9DE-B4521E647FEB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Communicators</RootNamespace>
-    <AssemblyName>Communicators</AssemblyName>
+    <RootNamespace>EcryptionManagers</RootNamespace>
+    <AssemblyName>EcryptionManagers</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,20 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICommunicator.cs" />
-    <Compile Include="MasterCommunicator.cs" />
+    <Compile Include="IEncryptionManager.cs" />
+    <Compile Include="RsaManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SlaveCommunicator.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CommunicationTools\CommunicationTools.csproj">
-      <Project>{e2b033c1-13eb-464b-9e08-1028a2c3e62c}</Project>
-      <Name>CommunicationTools</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RSAComunication\EcryptionManagers\EcryptionManagers.csproj">
-      <Project>{d78a0beb-40e3-4b83-a9de-b4521e647feb}</Project>
-      <Name>EcryptionManagers</Name>
-    </ProjectReference>
+    <Compile Include="TdesManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

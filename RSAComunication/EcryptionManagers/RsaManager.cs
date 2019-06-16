@@ -5,15 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 
-namespace CommunicationTools
+namespace EcryptionManagers
 {
-    public class RSAGenerator
+    public class RsaManager : IEncryptionManager
     {
         private RSACryptoServiceProvider rsa;
-        //  private RSAParameters _privateKey;
-        //  private RSAParameters _publicKey;
 
-        public RSAGenerator()
+        public RsaManager()
         {
             rsa = new RSACryptoServiceProvider(512);
         }
@@ -29,11 +27,11 @@ namespace CommunicationTools
         {
             return rsa.ToXmlString(true);
         }
-        public byte[] EncryptBytes(byte[] toEncrypt)
+        public byte[] Encrypt(byte[] toEncrypt)
         {
             return rsa.Encrypt(toEncrypt, true);
         }
-        public byte[] DecryptBytes(byte[] toDecrypt)
+        public byte[] Decrypt(byte[] toDecrypt)
         {
             return rsa.Decrypt(toDecrypt, true);
         }

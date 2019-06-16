@@ -44,6 +44,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.ImportPublicKeyLabel = new System.Windows.Forms.Label();
             this.ExportEncryptedTdesBtn = new System.Windows.Forms.Button();
+            this.ImportMessageLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // DecryptMessageLabel
@@ -69,7 +70,7 @@
             // 
             this.ImportMessageBtn.Location = new System.Drawing.Point(21, 379);
             this.ImportMessageBtn.Name = "ImportMessageBtn";
-            this.ImportMessageBtn.Size = new System.Drawing.Size(500, 23);
+            this.ImportMessageBtn.Size = new System.Drawing.Size(237, 23);
             this.ImportMessageBtn.TabIndex = 29;
             this.ImportMessageBtn.Text = "Importar mensaje de xml";
             this.ImportMessageBtn.UseVisualStyleBackColor = true;
@@ -201,12 +202,22 @@
             this.ExportEncryptedTdesBtn.UseVisualStyleBackColor = true;
             this.ExportEncryptedTdesBtn.Click += new System.EventHandler(this.ExportEncryptedTdesBtn_Click);
             // 
+            // ImportMessageLabel
+            // 
+            this.ImportMessageLabel.AutoSize = true;
+            this.ImportMessageLabel.Location = new System.Drawing.Point(275, 384);
+            this.ImportMessageLabel.Name = "ImportMessageLabel";
+            this.ImportMessageLabel.Size = new System.Drawing.Size(169, 13);
+            this.ImportMessageLabel.TabIndex = 34;
+            this.ImportMessageLabel.Text = "<Texto encriptado del fichero xml>";
+            // 
             // Master
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightBlue;
             this.ClientSize = new System.Drawing.Size(537, 710);
+            this.Controls.Add(this.ImportMessageLabel);
             this.Controls.Add(this.ExportEncryptedTdesBtn);
             this.Controls.Add(this.ImportPublicKeyLabel);
             this.Controls.Add(this.DecryptMessageLabel);
@@ -248,5 +259,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label ImportPublicKeyLabel;
         private System.Windows.Forms.Button ExportEncryptedTdesBtn;
+        private System.Windows.Forms.Label ImportMessageLabel;
     }
 }

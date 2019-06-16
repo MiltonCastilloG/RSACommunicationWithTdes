@@ -65,7 +65,7 @@ namespace VisualInterface
         }
         private void ExportMessageTdesBtn_Click(object sender, EventArgs e)
         {
-
+            slaveCommunicator.ExportXML("message");
         }
     }
 }

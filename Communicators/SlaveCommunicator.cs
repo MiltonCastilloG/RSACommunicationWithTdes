@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CommunicationTools;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using EcryptionManagers;
 
 namespace Communicators
 {
@@ -13,18 +14,20 @@ namespace Communicators
     {
         private string[] tdesKeysString;
         private byte[] tdesKeyByte;
+        private string encryptedMessage;
+        private string iv;
 
         private string saveDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "/xmls";
-        private RSAGenerator rsa;
-        private TDESGenerator tdes;
+        private RsaManager rsa;
+        private TdesManager tdes;
 
         public SlaveCommunicator() {
-            tdes = new TDESGenerator();
+            tdes = new TdesManager();
             tdesKeyByte = new byte[24];
         }
         public void GeneratePublicPrivateKey()
         {
-            rsa = new RSAGenerator();
+            rsa = new RsaManager();
         }
         public string getPublicKey() {
             return rsa.getPublicKey();
@@ -36,14 +39,18 @@ namespace Communicators
         public string ExportXML(string type)
         {
             if (type == "public_key")
-                return XMLParser.CreatePublicKeyXml(saveDirectory, rsa.getPublicKey());
+                return XmlParser.CreatePublicKeyXml(saveDirectory, rsa.getPublicKey());
+            else if (type == "message")
+                return XmlParser.CreateMessageXml(saveDirectory, encryptedMessage);
             throw new NotImplementedException();
         }
         public string ImportXML(string path, string type)
         {
             if (type == "encrypted_tdes")
             {
-                tdesKeysString = XMLParser.ReadXmlTdes(path);
+                string[] xmlResponse = XmlParser.ReadXmlTdes(path);
+                this.tdesKeysString = xmlResponse.ToList().Take(3).ToArray();
+                this.iv = xmlResponse[3];
                 return tdesKeysString[0]+ tdesKeysString[1]+tdesKeysString[2];
             }
             throw new NotImplementedException();
@@ -53,14 +60,18 @@ namespace Communicators
             int count = 0;
             foreach (string s in tdesKeysString)
             {
-                rsa.DecryptBytes(HexaByteConverter.HexaStringToByteArray(s)).CopyTo(tdesKeyByte, count);
+                rsa.Decrypt(HexaByteConverter.ToByte(s)).CopyTo(tdesKeyByte, count);
                 count += 8;
             }
-            return HexaByteConverter.ByteArrayToHexaString(tdesKeyByte);
+            this.tdes.setKeys(tdesKeyByte);
+            this.tdes.setIv(rsa.Decrypt(HexaByteConverter.ToByte(iv)));
+            return HexaByteConverter.ToHexa(tdesKeyByte);
         }
-        public string EncryptWithTdes(string message) {
+        public string EncryptWithTdes(string message)
+        {
             byte[] messageByte = new ASCIIEncoding().GetBytes(message);
-            return HexaByteConverter.ByteArrayToHexaString(tdes.Encrypt(messageByte));
+            encryptedMessage = HexaByteConverter.ToHexa(tdes.Encrypt(messageByte));
+            return encryptedMessage;
         }
     }
 }
