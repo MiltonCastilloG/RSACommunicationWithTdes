@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Communicators;
 
@@ -19,36 +16,59 @@ namespace VisualInterface
         {
             masterCommunicator = new MasterCommunicator();
             InitializeComponent();
-            Slave master = new Slave();
-            master.Show();
+            this.StartPosition = FormStartPosition.Manual;
+            foreach (var scrn in Screen.AllScreens)
+            {
+                if (scrn.Bounds.Contains(this.Location))
+                {
+                    this.Location = new Point(scrn.Bounds.Right - this.Width-100, scrn.Bounds.Top);
+                    return;
+                }
+            }
+        }
+        private void RsaGeneratorBtn_Click(object sender, EventArgs e)
+        {
+            PublicKeyValue.Text = this.masterCommunicator.getPublicKey();
+            PrivateKeyValue.Text = this.masterCommunicator.getPrivateKey();
         }
         private void ImportPublicKeyBtn_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog
+            try
             {
-                InitialDirectory = @"C:\Users\Yo\Desktop\Studies\Cryptografia\RSACommunicationWithTdes\xmls",
-                Title = "Browse XML Files",
+                OpenFileDialog openFileDialog1 = new OpenFileDialog
+                {
+                    InitialDirectory = Environment.CurrentDirectory + "/xml",
+                    Title = "Browse XML Files",
 
-                CheckFileExists = true,
-                CheckPathExists = true,
+                    CheckFileExists = true,
+                    CheckPathExists = true,
 
-                DefaultExt = "xml",
-                Filter = "xml files (*.xml)|*.xml",
-                FilterIndex = 2,
-                RestoreDirectory = true,
+                    DefaultExt = "xml",
+                    Filter = "xml files (*.xml)|*.xml",
+                    FilterIndex = 2,
+                    RestoreDirectory = true,
 
-                ReadOnlyChecked = true,
-                ShowReadOnly = true
-            };
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                    ReadOnlyChecked = true,
+                    ShowReadOnly = true
+                };
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    ImportPublicKeyLabel.Text = this.masterCommunicator.ImportXML(openFileDialog1.FileName, "public_key"); ;
+                    GenerateTdesBtn.Enabled = true;
+                    RsaGeneratorBtn.Enabled = false;
+                    PublicKeyValue.Text = ImportPublicKeyLabel.Text;
+                    PrivateKeyValue.Text = "false";
+                }
+            }
+            catch
             {
-                ImportPublicKeyLabel.Text = this.masterCommunicator.ImportXML(openFileDialog1.FileName, "public_key"); ;
-
+                MessageBox.Show("Documento invalido", "Error controlado");
             }
         }
         private void GenerateTdesBtn_Click(object sender, EventArgs e)
         {
             GenerateTdesLabel.Text = this.masterCommunicator.setTdesKeys();
+            EncryptWithPublicKeyBtn.Enabled = true;
         }
         private void EncryptWithPublicKeyBtn_Click(object sender, EventArgs e)
         {
@@ -59,40 +79,47 @@ namespace VisualInterface
                 encriptedTdesLabel += elem;
             }
             EncryptWithPublicKeyLabel.Text = encriptedTdesLabel;
+            ExportEncryptedTdesBtn.Enabled = true;
         }
         private void ExportEncryptedTdesBtn_Click(object sender, EventArgs e)
         {
             this.masterCommunicator.ExportXML("encrypted_tdes");
+            ImportMessageBtn.Enabled = true;
         }
         private void ImportMessageBtn_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog
+            try
             {
-                InitialDirectory = @"C:\Users\Yo\Desktop\Studies\Cryptografia\RSACommunicationWithTdes\xmls",
-                Title = "Browse XML Files",
+                OpenFileDialog openFileDialog1 = new OpenFileDialog
+                {
+                    InitialDirectory = Environment.CurrentDirectory + "/xml",
+                    Title = "Browse XML Files",
 
-                CheckFileExists = true,
-                CheckPathExists = true,
+                    CheckFileExists = true,
+                    CheckPathExists = true,
 
-                DefaultExt = "xml",
-                Filter = "xml files (*.xml)|*.xml",
-                FilterIndex = 2,
-                RestoreDirectory = true,
+                    DefaultExt = "xml",
+                    Filter = "xml files (*.xml)|*.xml",
+                    FilterIndex = 2,
+                    RestoreDirectory = true,
 
-                ReadOnlyChecked = true,
-                ShowReadOnly = true
-            };
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                ImportMessageLabel.Text = this.masterCommunicator.ImportXML(openFileDialog1.FileName, "message");
+                    ReadOnlyChecked = true,
+                    ShowReadOnly = true
+                };
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    ImportMessageLabel.Text = this.masterCommunicator.ImportXML(openFileDialog1.FileName, "message");
+                    DecryptMessageBtn.Enabled = true;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Documento invalido", "Error controlado");
+            }
         }
         private void DecryptMessageBtn_Click(object sender, EventArgs e)
         {
             DecryptMessageLabel.Text = this.masterCommunicator.DecryptMessage();
         }
-        private void RsaGeneratorBtn_Click(object sender, EventArgs e)
-        {
-
-        }
-        
     }
 }

@@ -3,7 +3,6 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using CommunicationTools;
 using EcryptionManagers;
 
@@ -16,7 +15,7 @@ namespace Communicators
         private string encryptedMessage;
         private IList<string> tdesListHexaString = new List<string>();
 
-        private string saveDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "/xmls";
+        private string saveDirectory = Environment.CurrentDirectory + "/xml";
         private RsaManager rsa;
         private TdesManager tdes;
 

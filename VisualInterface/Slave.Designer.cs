@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Slave));
             this.Title = new System.Windows.Forms.Label();
             this.RsaGeneratorBtn = new System.Windows.Forms.Button();
             this.PublicKeyValue = new System.Windows.Forms.Label();
@@ -107,6 +108,7 @@
             // 
             // ExportPublicKeyBtn
             // 
+            this.ExportPublicKeyBtn.Enabled = false;
             this.ExportPublicKeyBtn.Location = new System.Drawing.Point(25, 146);
             this.ExportPublicKeyBtn.Name = "ExportPublicKeyBtn";
             this.ExportPublicKeyBtn.Size = new System.Drawing.Size(500, 23);
@@ -117,6 +119,7 @@
             // 
             // ImportTdesXmlBtn
             // 
+            this.ImportTdesXmlBtn.Enabled = false;
             this.ImportTdesXmlBtn.Location = new System.Drawing.Point(25, 203);
             this.ImportTdesXmlBtn.Name = "ImportTdesXmlBtn";
             this.ImportTdesXmlBtn.Size = new System.Drawing.Size(121, 37);
@@ -127,6 +130,7 @@
             // 
             // DecryptTdesBtn
             // 
+            this.DecryptTdesBtn.Enabled = false;
             this.DecryptTdesBtn.Location = new System.Drawing.Point(25, 264);
             this.DecryptTdesBtn.Name = "DecryptTdesBtn";
             this.DecryptTdesBtn.Size = new System.Drawing.Size(121, 37);
@@ -172,6 +176,7 @@
             // 
             // EncryptMessageBtn
             // 
+            this.EncryptMessageBtn.Enabled = false;
             this.EncryptMessageBtn.Location = new System.Drawing.Point(25, 385);
             this.EncryptMessageBtn.Name = "EncryptMessageBtn";
             this.EncryptMessageBtn.Size = new System.Drawing.Size(500, 23);
@@ -182,9 +187,10 @@
             // 
             // ExportMessageTdesBtn
             // 
-            this.ExportMessageTdesBtn.Location = new System.Drawing.Point(282, 436);
+            this.ExportMessageTdesBtn.Enabled = false;
+            this.ExportMessageTdesBtn.Location = new System.Drawing.Point(25, 481);
             this.ExportMessageTdesBtn.Name = "ExportMessageTdesBtn";
-            this.ExportMessageTdesBtn.Size = new System.Drawing.Size(243, 23);
+            this.ExportMessageTdesBtn.Size = new System.Drawing.Size(500, 23);
             this.ExportMessageTdesBtn.TabIndex = 14;
             this.ExportMessageTdesBtn.Text = "Exportar mensaje a xml";
             this.ExportMessageTdesBtn.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -194,7 +200,7 @@
             // EncryptMessageLabel
             // 
             this.EncryptMessageLabel.AutoSize = true;
-            this.EncryptMessageLabel.Location = new System.Drawing.Point(60, 441);
+            this.EncryptMessageLabel.Location = new System.Drawing.Point(22, 436);
             this.EncryptMessageLabel.Name = "EncryptMessageLabel";
             this.EncryptMessageLabel.Size = new System.Drawing.Size(163, 13);
             this.EncryptMessageLabel.TabIndex = 15;
@@ -222,9 +228,9 @@
             this.Controls.Add(this.PublicKeyValue);
             this.Controls.Add(this.RsaGeneratorBtn);
             this.Controls.Add(this.Title);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Slave";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Text = "Esclavo";
             this.ResumeLayout(false);
             this.PerformLayout();
 

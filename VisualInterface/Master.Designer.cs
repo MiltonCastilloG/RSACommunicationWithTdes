@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Master));
             this.DecryptMessageLabel = new System.Windows.Forms.Label();
             this.DecryptMessageBtn = new System.Windows.Forms.Button();
             this.ImportMessageBtn = new System.Windows.Forms.Button();
@@ -58,6 +59,7 @@
             // 
             // DecryptMessageBtn
             // 
+            this.DecryptMessageBtn.Enabled = false;
             this.DecryptMessageBtn.Location = new System.Drawing.Point(21, 424);
             this.DecryptMessageBtn.Name = "DecryptMessageBtn";
             this.DecryptMessageBtn.Size = new System.Drawing.Size(243, 23);
@@ -68,6 +70,7 @@
             // 
             // ImportMessageBtn
             // 
+            this.ImportMessageBtn.Enabled = false;
             this.ImportMessageBtn.Location = new System.Drawing.Point(21, 379);
             this.ImportMessageBtn.Name = "ImportMessageBtn";
             this.ImportMessageBtn.Size = new System.Drawing.Size(237, 23);
@@ -96,6 +99,7 @@
             // 
             // EncryptWithPublicKeyBtn
             // 
+            this.EncryptWithPublicKeyBtn.Enabled = false;
             this.EncryptWithPublicKeyBtn.Location = new System.Drawing.Point(21, 264);
             this.EncryptWithPublicKeyBtn.Name = "EncryptWithPublicKeyBtn";
             this.EncryptWithPublicKeyBtn.Size = new System.Drawing.Size(182, 37);
@@ -106,6 +110,7 @@
             // 
             // GenerateTdesBtn
             // 
+            this.GenerateTdesBtn.Enabled = false;
             this.GenerateTdesBtn.Location = new System.Drawing.Point(21, 203);
             this.GenerateTdesBtn.Name = "GenerateTdesBtn";
             this.GenerateTdesBtn.Size = new System.Drawing.Size(182, 37);
@@ -194,6 +199,7 @@
             // 
             // ExportEncryptedTdesBtn
             // 
+            this.ExportEncryptedTdesBtn.Enabled = false;
             this.ExportEncryptedTdesBtn.Location = new System.Drawing.Point(21, 332);
             this.ExportEncryptedTdesBtn.Name = "ExportEncryptedTdesBtn";
             this.ExportEncryptedTdesBtn.Size = new System.Drawing.Size(500, 23);
@@ -234,6 +240,7 @@
             this.Controls.Add(this.PublicKeyValue);
             this.Controls.Add(this.RsaGeneratorBtn);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Master";
             this.Text = "Master";
             this.ResumeLayout(false);

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using CommunicationTools;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using EcryptionManagers;
 
 namespace Communicators
@@ -17,7 +14,7 @@ namespace Communicators
         private string encryptedMessage;
         private string iv;
 
-        private string saveDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "/xmls";
+        private string saveDirectory = Environment.CurrentDirectory + "/xml";
         private RsaManager rsa;
         private TdesManager tdes;
 
@@ -35,7 +32,15 @@ namespace Communicators
         public string getPrivateKey() {
             return rsa.getPrivateKey();
         }
-        
+        public void setTdesKey()
+        {
+            this.tdes.setKeys(tdesKeyByte);
+        }
+        public void setTdesIv()
+        {
+            this.tdes.setIv(rsa.Decrypt(HexaByteConverter.ToByte(iv)));
+        }
+
         public string ExportXML(string type)
         {
             if (type == "public_key")
@@ -63,8 +68,6 @@ namespace Communicators
                 rsa.Decrypt(HexaByteConverter.ToByte(s)).CopyTo(tdesKeyByte, count);
                 count += 8;
             }
-            this.tdes.setKeys(tdesKeyByte);
-            this.tdes.setIv(rsa.Decrypt(HexaByteConverter.ToByte(iv)));
             return HexaByteConverter.ToHexa(tdesKeyByte);
         }
         public string EncryptWithTdes(string message)
